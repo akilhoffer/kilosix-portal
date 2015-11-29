@@ -20,6 +20,9 @@ Kilosixcore.register(function (app, auth, database, system) {
 
     Kilosixcore.aggregateAsset('css', 'kilosixcore.css');
 
+    // This overrides the default templating from the system package.
+    app.set('views', __dirname + '/server/views');
+
     /**
      //Uncomment to use. Requires meanio@0.3.7 or above
      // Save settings with callback
