@@ -22,7 +22,6 @@ if ((cluster.isMaster) &&
   (process.execArgv.indexOf('--singleProcess')<0)) {
 //if (cluster.isMaster) {
 
-    console.log('for real!');
     // Count the machine's CPUs
     var cpuCount = 1; // require('os').cpus().length;
 

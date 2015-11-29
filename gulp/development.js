@@ -5,18 +5,16 @@ var gulp = require('gulp'),
   through = require('through'),
   gutil = require('gulp-util'),
   plugins = gulpLoadPlugins(),
-  coffee = require('gulp-coffee'),
   paths = {
-    js: ['./*.js', 'config/**/*.js', 'gulp/**/*.js', 'tools/**/*.js', 'packages/**/*.js', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**', '!packages/**/assets/**/js/**'],
+    js: ['./*.js', 'config/**/*.js', 'gulp/**/*.js', 'tools/**/*.js', 'packages/**/*.js', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**', '!packages/**/assets/**/js/**', '!packages/core/**/*.js', '!packages/contrib/**/*.js'],
     html: ['packages/**/*.html', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**'],
-    css: ['packages/**/*.css', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**','!packages/core/**/public/assets/css/*.css'],
+    css: ['packages/**/*.css', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**','!packages/core/**/public/assets/css/*.css', '!packages/contrib/**/public/assets/css/*.css'],
     less: ['packages/**/*.less', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**'],
-    sass: ['packages/**/*.scss', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**'],
-    coffee: ['packages/**/*.coffee', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**']
+    sass: ['packages/**/*.scss', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**']
   };
 
 /*var defaultTasks = ['clean', 'jshint', 'less', 'csslint', 'devServe', 'watch'];*/
-var defaultTasks = ['coffee','clean', 'less', 'csslint', 'devServe', 'watch'];
+var defaultTasks = ['clean', 'less', 'csslint', 'devServe', 'watch'];
 
 gulp.task('env:development', function () {
   process.env.NODE_ENV = 'development';
@@ -75,16 +73,9 @@ gulp.task('devServe', ['env:development'], function () {
   });
 });
 
-gulp.task('coffee', function() {
-  gulp.src(paths.coffee)
-    .pipe(coffee({bare: true}).on('error', gutil.log))
-    .pipe(gulp.dest('./packages'));
-});
-
 gulp.task('watch', function () {
   plugins.livereload.listen({interval:500});
 
-  gulp.watch(paths.coffee,['coffee']);
   gulp.watch(paths.js, ['jshint']);
   gulp.watch(paths.css, ['csslint']).on('change', plugins.livereload.changed);
   gulp.watch(paths.less, ['less']);
